@@ -49,33 +49,37 @@ El siguiente esquema muestra de manera resumida las distintas fases que hemos de
 
 
 
+![esquema](https://raw.githubusercontent.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/refs/heads/main/imagenes/esquema_metodo.png)
+
+
+
+En las siguientes secciones se describen con más detalle los siguientes pasos de la metodología propuesta.
 
 
 
 
+## Transformación de variable a criterio
 
+En la sesión anterior hemos trabajado en la identificación de variables que son importantes para el ejemplo que nos ocupa: identificación de lugares adecuados para la creación de espacios protegidos. Estas variables se representan en este ejemplo como mapas que describen la distribución en el territorio de la variable en cuestión. Además se pueden usar para multitud de situaciones diferentes. Es decir, un mapa de diversidad, por ejemplo, se puede usar para nuestro caso de estudio y para cualquier otro en el que el suelo sea relevante.
 
-
-
-
-En las siguientes secciones se describen con más detalle los métodos anteriores.
-
-
-## Técnicas de superposición y combinación de variables
-
-Antes de describir las distintas técnicas de agregación, estudiaremos una condición importante que han de cumplir todas las variables para ser integradas con estos métodos:
-
-
-### Transformación de variable a criterio
-
-A lo largo de la asignatura hemos trabajado en la generación de mapas que muestran la distribución espacial de algunas variables biofísicas relevantes para nuestro caso de estudio: severidad del incendio,, diversidad (índice de Shannon), producción primaria, etc. Estas capas expresan la variable en cuestión usando unidades propias de la variable considerada (ej. árboles/hectárea). Además se pueden usar para multitud de situaciones diferentes. Es decir, un mapa de profundidad del suelo, por ejemplo, se puede usar para nuestro caso de estudio y para cualquier otro en el que el suelo sea relevante.
-
-Pero cuando aplicamos a la variable un cierto criterio decisional debemos de transformar el mapa que representa la distribución espacial de dicha variable. Es decir, si queremos tener un mapa que muestre la distribución espacial de un criterio concreto, es necesario transformar la variable de la que partimos. Por ejemplo, imaginemos que queremos ubicar en el territorio un área recreativa. Y resulta que la densidad del bosque es determinante para esto: las zonas más densas no son adecuadas porque en ellas no caben las mesas del área recreativa. Así, en este caso, **al aumentar la densidad del bosque, se reduce la idoneidad para albergar áreas recreativas**. Sin embargo, en el ejemplo que nos ocupa ocurre lo contrario: **al aumentar la densidad aumenta la idoneidad** porque debemos de reducir la competencia intraespecífica en aquellos lugares en los que ésta es más intensa (más densidad). En el proceso de transformación de la *variable* a *criterio*, aplicamos una función de transformación. Esta función cumple dos objetivos:
+Pero cuando aplicamos a la variable un cierto criterio decisional debemos de transformar el mapa que representa la distribución espacial de dicha variable. Es decir, si queremos tener un mapa que muestre la distribución espacial de un criterio concreto, es necesario transformar la variable de la que partimos. Por ejemplo, imaginemos que queremos ubicar en el territorio un área recreativa. Y resulta que la densidad del bosque es determinante para esto: las zonas más densas no son adecuadas porque en ellas no caben las mesas del área recreativa. Así, en este caso, **al aumentar la densidad del bosque, se reduce la idoneidad para albergar áreas recreativas**. En el proceso de transformación de la *variable* a *criterio*, aplicamos una función de transformación. Esta función cumple dos objetivos:
 
 + Estandariza los valores de todos los mapas para usar un rango de 0 a 1 (o a veces de 0 a 255)
-+ Transforma los valores de la variable (producción primaria, profundidad del suelo, etc.) a valores de idoneidad cualitativos.
++ Transforma los valores de la variable (producción primaria, profundidad del suelo, diversidad, etc.) a valores de idoneidad cualitativos.
 
-La función de transformación puede tener formas diferentes. En nuestro caso asumiremos que la relación entre cada variable y su criterio es lineal. Así que tendremos dos situaciones representadas por los dos dibujos que hay a continuación: Función de preferencia directa e inversa. 
+La función de transformación puede tener formas diferentes (ver siguiente figura).
+
+
+
+
+
+
+
+
+
+
+
+En nuestro caso asumiremos que la relación entre cada variable y su criterio es lineal. Así que tendremos dos situaciones representadas por los dos dibujos que hay a continuación: Función de preferencia directa e inversa. 
 
 
 
