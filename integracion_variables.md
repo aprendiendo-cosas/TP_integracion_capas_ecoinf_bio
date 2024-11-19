@@ -214,7 +214,7 @@ Por último, combinamos los dos resultados parciales obtenidos anteriormente con
 MIN("apt_dist_vias_o_apt_dist_nucleos@1","apt_shannon_o_apt_temp_futuro@1")
 ```
 
-Al resultado le llamamos *escenario_3.tif*
+Al resultado le llamamos *[escenario_3.tif](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/escenario_3.tif)*
 
 
 
