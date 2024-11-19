@@ -188,7 +188,7 @@ Para implementar esta operación en un SIG, usamos dos operadores matemáticos m
 
 La siguiente figura muestra el funcionamiento de estos operadores:
 
-<img src="https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/imagenes/operadores_booleanos.png" alt="imagen" style="zoom:40%;" />
+![booleanos](https://raw.githubusercontent.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/refs/heads/main/imagenes/operadores_booleanos.png)
 
 Para aplicar estos operadores a nuestras capas, usamos la calculadora de mapas de QGIS en tres pasos anidados:
 
@@ -198,13 +198,29 @@ Primero combinamos con el operador **o** la aptitud con relación a la diversida
 MAX ( "apt_shannon@1","apt_temp_futuro@1")
 ```
 
-Al resultado le llamamos *apt_shannon_o_apt_temp_futuro.tif*
+Al resultado le llamamos [*apt_shannon_o_apt_temp_futuro.tif*](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/apt_shannon_o_apt_temp_futuro.tif)
 
-  MIN (MAX ( "apt_shannon@1","apt_temp_futuro@1"),  MAX ("apt_dist_red_viaria@1","apt_dist_zona_urbana@1")
+Luego combinamos con el operador **o** la aptitud con relación a la distancia a núcleos urbanos y a vías de comunicación:
+
+```py
+MAX ("apt_dist_red_viaria@1","apt_dist_zona_urbana@1")
+```
+
+Al resultado le llamamos [*apt_dist_vias_o_apt_dist_nucleos.tif*](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/apt_dist_vias_o_apt_dist_nucleos.tif)
+
+Por último, combinamos los dos resultados parciales obtenidos anteriormente con el operador **y**:
+
+```py
+MIN("apt_dist_vias_o_apt_dist_nucleos@1","apt_shannon_o_apt_temp_futuro@1")
+```
+
+Al resultado le llamamos *escenario_3.tif*
+
+
 
 Los operadores anteriores son un poco "rígidos" dado que solo seleccionan los valores extremos (mínimo o máximo). Para suavizar el resultado se pueden usar otros operadores como los mostrados en la siguiente figura:
 
-<img src="https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/imagenes/operadores_difusos.png" alt="imagen" style="zoom:40%;" />
+![difusos](https://raw.githubusercontent.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/refs/heads/main/imagenes/operadores_difusos.png)
 
 
 
@@ -231,23 +247,33 @@ Para reclasificar una capa rastser en QGIS, buscamos el algoritmo "reclassify by
 
 Además de lo visto anteriormente, os paso la siguiente información que puede resultar de utilidad:
 
-+ [Artículo](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/biblio/modelos_ecologicos.pdf) que describe distintos tipos de modelos ecológicos. Incide en alguno de los conceptos descritos en la sesión final de nuestra asignatura. 
-+ [Resumen](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/biblio/herramientas_apoyo_decisiones.pdf) de mi tesis (año 2003, no os riais de los esquemas, por favor. En esa época no existía R). En el texto se describen los conceptos generales sobre integración de información ambiental usando técnicas de operadores booleanos. He recortado solo la parte interesante. Eso hace que el texto no sea muy fluido porque faltan secciones.
++ [Artículo](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/main/biblio/modelos_ecologicos.pdf) que describe distintos tipos de modelos ecológicos. Incide en alguno de los conceptos descritos en la sesión final de nuestra asignatura. 
+
++ [Resumen](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/main/biblio/herramientas_apoyo_decisiones.pdf) de mi tesis (año 2003, no os riais de los esquemas, por favor. En esa época no existía ni R ni QGIS). En el texto se describen los conceptos generales sobre integración de información ambiental usando técnicas de operadores booleanos. He recortado solo la parte interesante. Eso hace que el texto no sea muy fluido porque faltan secciones.
+
 + Varios textos sobre análisis multicriterio:
-  + [Artículo](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/biblio/multicriterio_seleccion_zonas_plantas_electricas.pdf) sobre el uso del análisis multicriterio para localizar plantas de producción fotovoltaica. 
-  + [Interesante](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/biblio/MCE_review.pdf) revisión del uso de las técnicas multicriterio en cuestiones de conservación de la naturaleza. Muy recomendable este trabajo.
-  + [Artículo](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/biblio/ecological_corridors_multicriteria.pdf) que describe cómo la conectividad ecológica del paisaje usando evaluación multicriterio.
-  + [Informe](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/biblio/memoria_apicola_2004.pdf) de la REDIAM que describe cómo se hizo el mapa de aprovechamientos apícolas de Andalucía usando la técnica de la evaluación multicriterio. 
-+ [Manual](https://geodacenter.github.io/workbook/9a_spatial1/lab9a.html) interesante sobre el uso de la clasificación espacialmente explícita.
+  + [Artículo](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/main/biblio/multicriterio_seleccion_zonas_plantas_electricas.pdf) sobre el uso del análisis multicriterio para localizar plantas de producción fotovoltaica. 
+  + [Interesante](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/main/biblio/MCE_review.pdf) revisión del uso de las técnicas multicriterio en cuestiones de conservación de la naturaleza. Muy recomendable este trabajo.
+  + [Artículo](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/main/biblio/ecological_corridors_multicriteria.pdf) que describe cómo la conectividad ecológica del paisaje usando evaluación multicriterio.
+  + [Informe](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/main/biblio/Memoria_Apicola_2004.pdf) de la REDIAM que describe cómo se hizo el mapa de aprovechamientos apícolas de Andalucía usando la técnica de la evaluación multicriterio. 
+  
+  
 
 
 
 
 
+****
 
-# Vídeo de la sesión
+[Aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/archive/refs/tags/2024_2025.zip) puedes descargar un archivo .zip que contiene este guión en formato html y todo el material que incluye.
 
-Este vídeo muestra los contenidos comentados durante la sesión del día 24 de noviembre. 
+****
 
+Haz click [aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/releases) para ver cómo ha cambiado este guión en los distintos cursos académicos.
 
-<iframe width="560" height="515" src="https://www.youtube.com/embed/teqT3d6G8E4?si=WYVQ-H-rQ0_8VYfs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+****
+
+ <p xmlns:cc="http://creativecommons.org/ns#" >El contenido de este repositorio se puede utilizar bajo la siguiente licencia:  <a  href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"  target="_blank" rel="license noopener noreferrer"  style="display:inline-block;">CC BY-NC-SA 4.0<img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"  alt=""></a></p> 
+
+<p>Esta licencia no aplica a enlaces a artículos, libros o imágenes no originales. Estos productos tienen su licencia correspondiente.</p>
+
