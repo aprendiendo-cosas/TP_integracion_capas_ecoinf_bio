@@ -71,21 +71,13 @@ La función de transformación puede tener formas diferentes (ver siguiente figu
 
 
 
-
-
-
-
-
-
-
+![esquema](https://raw.githubusercontent.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/refs/heads/main/imagenes/estandarizacion.jpg)
 
 En nuestro caso asumiremos que la relación entre cada variable y su criterio es lineal. Así que tendremos dos situaciones representadas por los dos dibujos que hay a continuación: Función de preferencia directa e inversa. 
 
 
 
-<img src="https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/imagenes/funcion_pertenencia_directa.png" alt="imagen" style="zoom:25%;" />
-
-<img src="https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/imagenes/funcion_pertenencia_inversa.png" alt="imagen" style="zoom:25%;" />
+<img src="https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/imagenes/funcion_pertenencia_lineal.png" alt="imagen" style="zoom:25%;" />
 
 
 
