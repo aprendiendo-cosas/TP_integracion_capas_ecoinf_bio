@@ -1,10 +1,10 @@
-# Técnicas de agregación de variables ambientales
+# Técnicas "difusas" de agregación de variables ambientales
 
-
-> + **_Versión_**: 2023-2024
-> + **_Asignatura_** : SIG II (Máster GEOFOREST). 
-> + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
-> + **_Duración_**: 1 hora.
+> + **_Tipo de material_**: <span style="display: inline-block; font-size: 12px; color: white; background-color: #029BF9; border-radius: 5px; padding: 5px; font-weight: bold;"> Teoría</span> <span style="display: inline-block; font-size: 12px; color: white; background-color: #4caf50; border-radius: 5px; padding: 5px; font-weight: bold;">Prácticas</span> 
+> + **_Versión_**: 2024-2025
+> + **_Asignatura_** : Ecoinformática (Grado en biología). 
+> + **_Autor_**: Cristina Crespo Bastias (crbasc@gmail.com), Curro Bonet-García (fjbonet@uco.es)
+> + **_Duración_**: 50 minutos.
 
 
 
@@ -15,34 +15,47 @@ Esta actividad tiene los siguientes objetivos de aprendizaje:
 + Entender que hay otras técnicas diferentes a la estadística correlacional para entender (y modelar) la naturaleza. 
 + Aprender que estas otras técnicas (evaluación multicriterio, integración booleana de variables, etc.) tienen, como todo, ventajas e inconvenientes.
 + Aprender técnicas de integración de datos relacionados con la asistencia a la toma de decisiones. 
++ Poner en práctica (al menos parcialmente) alguna de estas técnicas.
 
 
 
-## Hilo argumental
+## Introducción
 
-Esta sesión se organiza en torno al siguiente hilo argumental:
-+ Enumeración de los factores ecológicos y socioeconómicos que nos permiten responder a la pregunta inicialmente planteada en esta asignatura. Esta fase es clave porque en ella realizamos un proceso de abstracción o de modelización de la realidad: es necesario entender bien el problema de gestión o científico que queremos resolver para identificar adecuadamente las variables involucradas en el mismo. 
-+ Identificación del tipo de problema que estamos tratando de resolver y evaluació de la disponibilidad de datos (y de herramientas analíticas) para su abordaje. Algunas preguntas o problemas pueden ser resueltos con técnicas correlacionales (establecer relaciones entre variables dependientes e independientes), mientras que otras requieren una aproximación más mecanicista (simular los procesos socioecológicos implicados). En otras ocasiones no disponemos de tiempo o de datos para hacer nada de lo anterior. En esos casos debemos de recurrir a técnicas en las que el conocimiento experto tiene más importancia. De forma algo más detallada, disponemos de los siguientes grandes grupos de técnicas analíticas:
-  + Métodos estadísticos: se trata de encontrar una función matemática que explique correctamente cómo cambia la variable dependiente (regeneración de encina bajo el pinar) en función de las múltiples variables independientes. Esta aproximación es la tradicional.
-  + Álgebra de mapas: Se trata de un conjunto de técnicas que permiten combinar mapas procedentes de formatos diversos para resolver un problema de ubicación en el espacio de una actividad dada (en nuestro caso ubicación de las zonas con más regeneración).
-  + Métodos basados en procesos: Consisten en simular el funcionamiento íntimo de los procesos elementales implicados en la pregunta en cuestión. 
+Partimos de la pregunta planteada en la sesión anterior:
+
+> ¿Qué variables podemos utilizar para declarar una zona como espacio protegido?
+
+Responder a esta pregunta desde la lógica correlacional a la que estamos acostumbrados (variable dependiente y variables dependientes que se relacionan) es imposible por varios motivos:
+
++ Hay demasiadas variables en la susceptiblidad de un territorio para ser útil desde el punto de vista de la protección de la naturaleza. No podemos contemplarlas todas.
++ Aunque consiguiéramos fijar algunas variables, no disponemos de la capacidad experimental necesaria para establecer relaciones entre las variables. Tendríamos que plantear un experimento en el que las distintas variables potencialmente explicativas (diversidad, distancia a núcleos urbanos, etc.) se manifestaran de manera similar en dos territorios: uno protegido y otro sin proteger. Esto es imposible.
+
+Así que para decidir qué lugares son más adecuados para albergar un espacio protegido debemos de buscar otros métodos de generar conocimiento. Estas aproximaciones, más difusas y flexibles que las que conocemos, nos permiten abordar problemas como el que nos ocupa. Podemos englobar estas técnicas bajo la denominación de "álgebra de mapas". Estos métodos consisten en "unir" las distintas variables implicadas en un proceso o problema concreto usando justificaciones o razonamientos relacionados con el conocimiento experto. Se trata, por tanto, de "proyectar" en un procedimiento matemático el conocimiento que una o varias personas tienen sobre un problema o proceso concreto. Estas técnicas son muy fáciles de implementar, ya que implican operaciones matemáticas sencillas. Su principal desventaja es que son muy dependientes del conocimiento experto. De modo que si este está sesgado o es incorrecto, también lo serán los resultados obtenidos. Para reducir esta fuente de error se suelen aplicar usando colectivos de personas con distintas "versiones" del conocimiento experto. 
+
+En la sesión anterior se identificaron una serie de variables potencialmente útiles para responder a la pregunta que nos ocupa. Estas variables se identificaron basándose en el criterio experto de los estudiantes y de la profesora Cristina:
+
++ Diversidad. La diversidad biológica es importante para considerar una zona como potencialmente protegible. Se supone que es esa diversidad la que queremos proteger.
++ Distancia a zonas urbanas. La distancia entre la zona protegida y los núcleos urbanos también es importante porque esto puede condicionar los posibles impactos al espacio protegido o el uso que se hace de este.
++ Distancia a vías de comunicación. Igualmente, lo bien o mal comunicado que esté un espacio protegido condiciona tanto los impactos potenciales de la actividad humana como su posible uso por parte de la sociedad.
++ Efecto del cambio climático. Sabemos que el clima está cambiando. Quizás es importante tener en cuenta esta variable para diseñar nuestra red de espacios protegidos. 
+
+Esta fase de enumeración de las variables es clave porque en ella realizamos un proceso de abstracción o de modelización de la realidad: es necesario entender bien el problema de gestión o científico que queremos resolver para identificar adecuadamente las variables involucradas en el mismo. 
+
+También es la fase más sencilla y más intuitiva. A partir de aquí, la cosa se complica (solo un poco). 
+
+Una vez que hemos identificado las variables importantes, es fundamental saber si disponemos de datos para calcularlas. Si no tenemos datos para describir cómo cambia la diversidad en nuestra zona de estudio, por ejemplo, no podemos usar esa variable. En estos casos se suele recurrir a variables "subrogadas" (o proxy). Se trata de variables que, si bien no corresponden con la original que consideramos importante, están relacionados con ella. Por ejemplo, si estamos trabajando en una zona montañosa y necesitamos un mapa de precipitación del que no disponemos, podemos usar la altitud como subrogado de la precipitación. 
+
+El siguiente esquema muestra de manera resumida las distintas fases que hemos de cumplir para aplicar estas técnicas difusas propias de la álgebra de mapas. 
 
 
-El siguiente esquema muestra las técnicas anteriores de manera más gráfica.
 
 
 
-![tipos](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/blob/2023_2024/imagenes/tipos_metodos.png?raw=true)
 
 
 
-En nuestro caso no podemos hacer experimentos porque no tenemos recursos económicos ni tiempo. Tampoco podemos realizar modelos basados en procesos porque no disponemos del conocimiento necesario ni del tiempo para adquirirlo (tampoco es el objetivo de esta asignatura). Así que, trataremos de responder a la pregunta inicial que nos hacemos en la asignatuar usando técnicas empíricas que tienen en cuenta el conocimiento experto y otras aproximaciones más "difusas" que las otras mostradas en el esquema. Más específicamente usaremos las siguientes técnicas:
 
-- Técnicas de superposición y combinación de variables: Estos métodos consisten en "unir" las distintas variables implicadas en un proceso o problema concreto usando justificaciones o razonamientos relacionados con el conocimiento experto. Se trata, por tanto, de "proyectar" en un procedimiento matemático el conocimiento que una o varias personas tienen sobre un problema o proceso concreto. Estas técnicas son muy fáciles de implementar, ya que implican operaciones matemáticas sencillas. Su principal desventaja es que son muy dependientes del conocimiento experto. De modo que si este está sesgado o es incorrecto, también lo serán los resultados obtenidos. Para reducir esta fuente de error se suelen aplicar usando colectivos de personas con distintas "versiones" del conocimiento experto. En esta asignatura utilizaremos estas dos técnicas:
 
-  - Evaluación multicriterio: Agregación de variables mediante pesos.
-  - Operadores lógicos: Agregación de variables mediante operadores.
-- Técnicas de agrupación de variables: En estos métodos no hay un proceso real de integración, sino que se realiza ujna clasificación del territorio en función de los valores que tiene cada punto para cada una de las variables seleccionadas. Como cada variable puede tener valores continuos, los algoritmos que usamos aquí definen rangos para clasificar las variables y crear grupos (o cluster) de lugares (píxeles, polígonos) que tienen características similares. La siguiente imagen ejemplifica bien esta forma de proceder. Imaginemos que en un territorio determinado hay solo dos variables que consideramos importantes. Si representamos esas variables en 
 
 
 En las siguientes secciones se describen con más detalle los métodos anteriores.
@@ -142,21 +155,7 @@ Para reclasificar una capa rastser en QGIS, buscamos el algoritmo "reclassify by
 | 0.9 | 1|1|
  - _reclassified raster_ (capa de salida): _apt\_final\_re.tif_
 
-## Técnicas de agrupación de variables
 
-Este conjunto de técnicas consiste en una serie de algoritmos que permiten clasificar una serie de variables y crear grupos de elementos que tienen características parecidas. El término "clasificación" es el más comunmente utilizado en estos casos. 
-
-Se trata de crear grupos de elementos que tienen características parecidas en virtud de una serie de variables. En nuestro caso, la idea es seleccionar lugares (píxeles o polígonos) que son parecidos desde el punto de vista de las variables ambientales estudiadas. Las técnicas de clasificación hacen estos grupos teniendo en cuenta las similitudes entre los elementos a agrupar. Para ello es necesario definir un umbral de similitud. Es decir, se trata de agrupar elementos en función de cómo de similares son entre sí con respecto a una serie de variables.
-
-En nuestro caso la agrupación de las variables tiene consecuencias espaciales porque cada uno de los puntos del territorio (píxeles o polígonos) están espacialmente referenciados. Por tanto, el resultado de la agrupación será un mapa.
-
-El siguiente esquema muestra gráficamente la filosofía de esta técnica. No obstante, hay mucha información disponible en internet. Basta con buscar *K-means* (que es una de las técnicas más comunes) o clasificación supervisada.
-
-![tipos](https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/blob/2023_2024/imagenes/clustering.png?raw=true)
-
-A la izquierda se representan dos variables espacializadas (abajo) y el valor de una serie de puntos (numerados del 1 al 10) en función de las dos variables (gráfica superior izquierda). La clasificación consiste en construir grupos de puntos que tienen unas caracteríticas parecidas desde el punto de vista de las dos variables consideradas. Esta clasificación implica establecer similitudes entre los puntos (gráfica de arriba a la derecha). Además, esa clasificación se traduce en un mapa que muestra la distribución de las zonas homogéneas. Para cada conjunto de puntos se pueden definir un número ilimitado de agrupaciones diferentes. Las técnicas utilizadas para hacer la agrupación permiten seleccionar la más adecuada usando criterios estadísticos.
-
-Para hacer clasificaciones como las descritas anteriormente se pueden usar muchas herramientas diferentes. Es posible hacerlas en QGIS y también en R, donde hay multitud de paquetes específicamente diseñados para ello. A la hora de elegir una herramienta para hacer este procedimiento, es importante que utilice de manera explícita la componente espacial. Es decir, que la herramienta pueda hacer un agrupamiento geográfico. O dicho de otra forma, que proyecte el agrupamiento al territorio. Y aquí lo dejamos. Si queréis experimentar con estas herramientas, tenéis muchas a vuestro alcance. Para encontrarlas basta con usar las palabras clave *clustering* o *k-means*.
 
 
 
