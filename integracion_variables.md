@@ -93,29 +93,74 @@ Asumiremos una relación directa entre variable y aptitud. Es decir, a más dive
 + Por tanto, la ecuación sería así:
 
 ```python  
-  (1/(6.4734792709351-0.072917148470879))*shannon.tif - (0.072917148470879/(6.4734792709351-0.072917148470879))
+  (1/(6.4734792709351-0.072917148470879))*"shannon@1" - (0.072917148470879/(6.4734792709351-0.072917148470879))
 ```
-Para aplicar esta función lineal basta con poner el código anterior en la calculadora raster de QGIS. El resultado debe de llamarse *apt_shannon.tif*. Si no consigues hacerlo, aquí puedes descargarlo. 
+Para aplicar esta función lineal basta con poner el código anterior en la calculadora raster de QGIS. El resultado debe de llamarse *apt_shannon.tif*. Si no consigues hacerlo, [aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/apt_shannon.tif) puedes descargarlo. 
 
+### Distancia a zonas urbanas -> Aptitud con relación a la distancia a zonas urbanas.
+Asumiremos una relación directa entre variable y aptitud. Es decir, a más distancia mejor para nuestros objetivos (identificar sitios potencialmente protegibles). Justificamos esta afirmación diciendo que las zonas urbanas generan impactos importantes en los espacios protegidos y por tanto es mejor que estén lejos de ellas. Sabemos que los valores máximos y mínimos del mapa de distancias a zonas urbanas son (podemos verlos fácilmente en las propiedades de la capa, en QGIS)
 
-### Evaluación multicriterio
-
-El análisis multicriterio es una técnica muy sencilla que permite conciliar en un mismo mapa criterios diferentes. Es una forma de espacializar criterios decisionales basados en conocimiento experto. Es decir, gracias a esta técnica podemos obtener mapas que recojan los criterios de un centro decisor concreto con relación a un aspecto determinado.  En nuestro ejemplo tenemos varios criterios y se trata de unificarlos en un único mapa que asigne un valor de aptitud global a cada punto afectado por el incendio. Por ejemplo:
-+ Criterio de intensidad del incendio: a más intensidad más aptitud.
-+ Criterio de profundidad del suelo: a más profundidad más aptitud.
-+ Criterio de distancia a manchas donadoras de semillas: A más distancia menos aptitud.
-
-Para agregar los criterios empezaremos asignando un peso a cada uno de ellos. La suma de los pesos ha de ser 1. El criterio que tenga más peso contribuirá en mayor medida al mapa final. Procedemos en dos pasos:
-
-El proceso de integración se hace fácilmente con la calculadora de mapas de QGIS u operando con las capas raster en el caso de que trabajemos con R o con Python. El resultado final es la suma del producto de cada criterio (capa _apt_) por su peso. Introducimos la siguiente ecuación en la calculadora raster:
++ Mínimo: 0
++ Máximo: 22983.689453125
++ Por tanto, la ecuación sería así:
 
 ```python  
-  ("apt_densidad@1"*0.6)+("apt_cti@1"*0.1)+("apt_distancia@1"*0.3)
+  (1/(22983.689453125-0))*"dist_zona_urbana@1" - (0/(22983.689453125-0))
+```
+Para aplicar esta función lineal basta con poner el código anterior en la calculadora raster de QGIS. El resultado debe de llamarse *apt_dist_zona_urbana.tif*. Si no consigues hacerlo, [aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/apt_dist_zona_urbana.tif) puedes descargarlo. 
+
+### Distancia a la red viaria -> Aptitud con relación a la distancia a la red viaria.
+Asumiremos una relación inversa entre variable y aptitud. Es decir, a más distancia peor para nuestros objetivos (identificar sitios potencialmente protegibles). Justificamos esta afirmación diciendo que los espacios protegidos necesitan gestión y que para ello es importante que estén cerca de carreteras y caminos. Esto es muy cuestionable en realidad, pero lo hacemos así por fines docentes. Sabemos que los valores máximos y mínimos del mapa de distancias a carreteras son (podemos verlos fácilmente en las propiedades de la capa, en QGIS)
+
++ Mínimo: 0
++ Máximo: 17755.28125
++ Por tanto, la ecuación sería así:
+
+```python  
+ (1/(0-17755.28125))*"dist_red_viaria@1" - (17755.28125/(0-17755.28125))
+```
+Para aplicar esta función lineal basta con poner el código anterior en la calculadora raster de QGIS. El resultado debe de llamarse *apt_dist_red_viaria.tif*. Si no consigues hacerlo, [aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/apt_dist_red_viaria.tif) puedes descargarlo. 
+
+
+
+### Aumento previsto de temperatura -> Aptitud con relación al impacto del cambio climático
+
+Asumiremos una relación inversa entre variable y aptitud. Es decir, a más aumento de temperatura respecto a la media de la serie histórica, menos aptitud para nuestro objetivo. Justificamos esta decisión porque nos interesa que los espacios protegidos estén en lugares poco afectados por el cambio climático.  Sabemos que los valores máximos y mínimos del mapa de distancias a carreteras son (podemos verlos fácilmente en las propiedades de la capa, en QGIS)
+
++ Mínimo: 1.6337893009186
++ Máximo: 17755.28125
++ Por tanto, la ecuación sería así:
+
+```python  
+ (1/(1.7122367620468-4.7942304611206))*"temp_futuro@1" - (4.7942304611206/(1.7122367620468-4.7942304611206))
+```
+
+Para aplicar esta función lineal basta con poner el código anterior en la calculadora raster de QGIS. El resultado debe de llamarse *apt_temp_futuro.tif*. Si no consigues hacerlo, [aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/apt_temp_futuro.tif) puedes descargarlo. 
+
+Una vez que tenemos todos los criterios espacializados, podemos aplicar dos métodos para integrar las variables: evaluación multicriterio y operadores booleanos. Se describen en los siguientes apartados.
+
+
+
+## Evaluación multicriterio
+
+El análisis multicriterio es una técnica muy sencilla que permite combinar en un mismo mapa criterios diferentes. Es una forma de espacializar criterios decisionales basados en conocimiento experto. Es decir, gracias a esta técnica podemos obtener mapas que recojan los criterios de un centro decisor concreto con relación a un aspecto determinado.  En nuestro ejemplo tenemos varios criterios y se trata de unificarlos en un único mapa que asigne un valor de aptitud global a cada punto afectado por el incendio. 
+
+Para agregar los criterios empezaremos asignando un peso a cada uno de ellos. La suma de los pesos ha de ser 1. El criterio que tenga más peso contribuirá en mayor medida al mapa final. La siguiente figura muestra cómo se haría este proceso. 
+
+![multicriterio](https://raw.githubusercontent.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/refs/heads/main/imagenes/pesos_ponderados.png)
+
+El proceso de integración se hace fácilmente con la calculadora de mapas de QGIS u operando con las capas raster en el caso de que trabajemos con R o con Python. El resultado final es la suma del producto de cada criterio (capa _apt_) por su peso. El valor relativo de cada peso nos da una idea del escenario decisional en el que nos encontramos. Por ejemplo, la siguiente combinación de pesos da mucha importancia a la diversidad y al escenario de cambio climático. Llamaremos al resultado de esta operación *escenario_1.tif*
+
+```python  
+("apt_shannon@1" * 0.4)+("apt_temp_futuro@1"*0.4)+ ( "apt_dist_red_viaria@1"*0.1)+("apt_dist_zona_urbana@1"*0.1)
  
 ```
-La siguiente imagen muestra el método con otro ejemplo diferente:
+También podemos crear otro escenario (llamado *escenario_2.tif* en este caso) quitando importancia al efecto del cambio climático:
 
-<img src="https://github.com/aprendiendo-cosas/TP_integracion_final_SIG_II_geoforest/raw/2023_2024/imagenes/pesos_ponderados.png" alt="imagen" style="zoom:40%;" />
+```python  
+("apt_shannon@1" * 0.5)+("apt_temp_futuro@1"*0.1)+ ( "apt_dist_red_viaria@1"*0.2)+("apt_dist_zona_urbana@1"*0.2)
+ 
+```
 
 Uno de los problemas del análisis multicriterio es que ocurre una compensación de criterios. Si una variable tiene un valor muy alto en un lugar determinado, puede que el resultado final en ese punto sea alto aunque el valor de un criterio importante en ese punto sea bajo. Esto puede hacer que lugares no adecuados sean etiquetados como sí adecuados. Un ejemplo que ilustra esta situación: imaginemos que queremos montar un equipo de baloncesto. Un buen jugador de baloncesto ha de tener las siguientes características:
 + Altura.
@@ -124,14 +169,15 @@ Uno de los problemas del análisis multicriterio es que ocurre una compensación
 
 Si le damos distintos pesos a esas variables y con eso "puntuamos" la idoneidad de una lista de personas para entrar en nuestro equipo, puede darse la situación de que una persona tenga alta puntuación final aún teniendo los tobillos débiles. Eso implica tomar una decisión equivocada puesto que estaríamos incluyendo en el equipo a una persona que no rendiría bien. Esta situación denota que hay criterios que no solo tienen más peso que otros, sino que además deben satisfacerse **necesariamente** para tomar una decisión acertada. Y esto nos lleva a la segunda técnica de análisis de la decisión:
 
-### Operadores lógicos
+## Operadores lógicos
 
 En esta segunda técnica no se asignan pesos a los criterios que combinamos sino que se establecen condiciones que deben cumplir los lugares de nuestra zona de estudio para ser idoneos según el objetivo del proceso decisiona en cuestión. Volviendo al ejemplo del jugador de baloncesto ideal, diríamos algo así: debe de tener los tobillos fuertes **y** **o bien** ser fuerte **o bien** ser alto. De alguna forma estamos diciendo que hay una condición **necesaria** para ser buen jugador, pero no suficiente. Necesita tener los tobillos resistentes y luego una de las otras dos condiciones. Esta forma de combinar criterios decisionales recibe el nombre de integración mediante operadores booleanos porque implican el uso de las conjunciones **o** e **y**. 
 
-En el ejemplo que nos ocupa, usaremos operadores lógicos para integrar las tres capas. Consideraremos que un lugar es adecuado para satisfaer nuestros objetivos si cumple un criterio específico y una combinación de los otros dos. Es decir, pondremos como criterio fundamental que los lugares adecuados tengan una **alta severidad**. Si no se cumple este criterio, nunca se podrá obtener un valor alto al final del proceso de integración de las variables. Los otros dos criterios serán optativos entre sí. Es decir, seleccionaremos como lugares adecuados aquellos que **o bien están cerca de una mancha de vegetación natural, o bien tienen suelos potencialmente húmedos**. Es decir, en conjunto aplicaremos los siguientes criterios concatenados: Un lugar es considerado como adecuado si:
+En el ejemplo que nos ocupa, usaremos operadores lógicos para integrar las cuatro capas. Consideraremos que un lugar es adecuado para satisfaer nuestros objetivos si cumple un criterio específico y una combinación de los otros dos. Es decir, pondremos como criterio fundamental que los lugares adecuados tengan una **alta diversidad** o que sean **poco vulnerables al cambio climático**. Además, un lugar será adecuado para nuestros objetivos si también cumple el criterio de o bien **estar cerca de una carretera** o bien **estar lejos de un núcleo urbano**. Es decir, en conjunto aplicaremos los siguientes criterios concatenados: Un lugar es considerado como adecuado si:
 
-+ Tiene una alta densidad de pinos **Y**:
-+ Está cerca de una mancha de vegetación natural **O** tiene suelos potencialmente húmedos. 
++ Tiene alta diversidad **o** baja vulnerabilidad al cambio climático.
++ **Y**
++ Está cerca de una carretera **o** lejos de un núcleo urbano.
 
 Para implementar esta operación en un SIG, usamos dos operadores matemáticos muy sencillos:
 
@@ -150,7 +196,7 @@ Los operadores anteriores son un poco "rígidos" dado que solo seleccionan los v
 
 
 
-### Reclasificación de los resultados obtenidos
+## Reclasificación de los resultados obtenidos
 
 Tras aplicar cualquiera de las técnicas anteriores obtendremos un mapa con valores de aptitud que van de 0 a 1. Este mapa puede ser muy útil para comprender mejor el proceso socioecológico en el que estamos trabajando. Pero normalmente cuando se toman decisiones es necesario seleccionar una serie de zonas concretas en las que se va a realizar una actuación determinada. Por eso es útil simplificar el mapa resultante para elegir solo los lugares (=píxeles) que resulten más idoneos para nuestro objetivo. El resto los descartaremos porque no reunen los requisitos que hemos impuesto. Para hacer esta selección aplicaremos una operación muy común en análisis raster: [reclasificación](https://docs.qgis.org/3.4/en/docs/user_manual/processing_algs/qgis/rasteranalysis.html#qgisreclassifybytable). Consiste en reducir la diversidad de valores de un raster asigando nuevos en función de un rango. Por ejemplo, asignaremos el valor de 1 a todos los píxeles que tengan una aptitud igual o mayor de 0.8. Para hacer esto, construimos una tabla de reclasificación.
 
