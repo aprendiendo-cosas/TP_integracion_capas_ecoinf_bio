@@ -34,10 +34,10 @@ Así que para decidir qué lugares son más adecuados para albergar un espacio p
 
 En la sesión anterior se identificaron una serie de variables potencialmente útiles para responder a la pregunta que nos ocupa. Estas variables se identificaron basándose en el criterio experto de los estudiantes y de la profesora Cristina:
 
-+ Diversidad. La diversidad biológica es importante para considerar una zona como potencialmente protegible. Se supone que es esa diversidad la que queremos proteger. Aquí puedes descargar el mapa de diversidad de Andalucía. Y aquí puedes ver cómo se obtuvo. 
-+ Distancia a zonas urbanas. La distancia entre la zona protegida y los núcleos urbanos también es importante porque esto puede condicionar los posibles impactos al espacio protegido o el uso que se hace de este.
-+ Distancia a vías de comunicación. Igualmente, lo bien o mal comunicado que esté un espacio protegido condiciona tanto los impactos potenciales de la actividad humana como su posible uso por parte de la sociedad.
-+ Efecto del cambio climático. Sabemos que el clima está cambiando. Quizás es importante tener en cuenta esta variable para diseñar nuestra red de espacios protegidos. 
++ Diversidad. La diversidad biológica es importante para considerar una zona como potencialmente protegible. Se supone que es esa diversidad la que queremos proteger. [Aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/shannon.tif) puedes descargar el mapa de diversidad de Andalucía. Y [aquí](https://raw.githack.com/aprendiendo-cosas/P_shannon_ecologia_ccaa/main/guion_practica_mapa_biodiversidad.html) puedes ver cómo se obtuvo. 
++ Distancia a zonas urbanas. La distancia entre la zona protegida y los núcleos urbanos también es importante porque esto puede condicionar los posibles impactos al espacio protegido o el uso que se hace de este. [Aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/dist_zona_urbana.tif) puedes descargar el mapa de distancias de cada punto de Andalucía a la zona urbana más cercana. 
++ Distancia a vías de comunicación. Igualmente, lo bien o mal comunicado que esté un espacio protegido condiciona tanto los impactos potenciales de la actividad humana como su posible uso por parte de la sociedad. [Aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/dist_red_viaria.tif) puedes descargar el mapa de distancias de cada punto de Andalucía a la carretera más cercana. 
++ Efecto del cambio climático. Sabemos que el clima está cambiando. Quizás es importante tener en cuenta esta variable para diseñar nuestra red de espacios protegidos. Usaremos una capa que muestra la estimación de la desviación de temperatura media anual (en décimas de grado) para la década de 2090 a 2100. Esta capa se ha obtenido a partir de la [REDIAM](https://www.juntadeandalucia.es/medioambiente/portal/acceso-rediam) y puedes descargla [aquí](https://github.com/aprendiendo-cosas/TP_integracion_capas_ecoinf_bio/raw/refs/heads/main/geoinfo/temp_futuro.tif). 
 
 Esta fase de enumeración de las variables es clave porque en ella realizamos un proceso de abstracción o de modelización de la realidad: es necesario entender bien el problema de gestión o científico que queremos resolver para identificar adecuadamente las variables involucradas en el mismo. 
 
@@ -83,7 +83,19 @@ En nuestro caso asumiremos que la relación entre cada variable y su criterio es
 
 En los dibujos anteriores también puedes ver cómo calcular los parámetros de las funciones. Dado que una recta está definida por dos puntos, es fácil despejar los parámetros de la ecuación de la recta (pendiente y ordenada en el origen) a partir de los valores extremos (que toman valores 0 y 1 en el mapa de idoneidad).
 
-Para aplicar estas 
+Para aplicar estas funciones de transformación a las variables con las que trabajamos tendremos que parametrizar las ecuaciones lineales anteriores. Lo haremos de la siguiente forma en QGIS.
+
+### Mapa de diversidad -> Aptitud con relación a la biodiversidad.
+Asumiremos una relación directa entre variable y aptitud. Es decir, a más diversidad mejor para nuestros objetivos (identificar sitios potencialmente protegibles). Sabemos que los valores máximos y mínimos del mapa de diversidad son (podemos verlos fácilmente en las propiedades de la capa, en QGIS)
+
++ Mínimo: 0.008539155125618
++ Máximo: 6.4734792709351
++ Por tanto, la ecuación sería así:
+
+```python  
+  (1/(6.4734792709351-0.072917148470879))*shannon.tif - (0.072917148470879/(6.4734792709351-0.072917148470879))
+```
+Para aplicar esta función lineal basta con poner el código anterior en la calculadora raster de QGIS. El resultado debe de llamarse *apt_shannon.tif*. Si no consigues hacerlo, aquí puedes descargarlo. 
 
 
 ### Evaluación multicriterio
